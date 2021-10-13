@@ -1,24 +1,24 @@
-import logo from './logo.svg';
 import './App.css';
+import { Layout, Card } from 'antd';
+import NavBar from './components/NavBar';
+
+const { Header, Footer, Content } = Layout;
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Layout>
+        <Header className="header">
+          <NavBar></NavBar>
+        </Header>
+        <Content>
+          <Card style={{ margin: '1em 1em' }}>
+            Content
+          </Card>
+        </Content>
+        <Footer style={{ textAlign: 'center' }}>Kine Hakin 2021</Footer>
+      </Layout>
+    </>
   );
 }
 
