@@ -1,6 +1,7 @@
 import './App.css';
 import { Layout, Card } from 'antd';
 import NavBar from './components/NavBar';
+import ItemListContainer from './components/ItemListContainer';
 
 const { Header, Footer, Content } = Layout;
 
@@ -13,10 +14,12 @@ function App() {
         </Header>
         <Content>
           <Card style={{ margin: '1em 1em' }}>
-            Content
+            <ItemListContainer greetings="Greetings from ItemListContainer" />
           </Card>
         </Content>
-        <Footer style={{ textAlign: 'center' }}>Kine Hakin 2021</Footer>
+        <Footer style={{ textAlign: 'center' }}>
+          Kine Hakin 2021
+        </Footer>
       </Layout>
     </>
   );
