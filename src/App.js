@@ -13,8 +13,8 @@ function App() {
           <NavBar></NavBar>
         </Header>
         <Content>
-          <Card style={{ margin: '1em 1em' }}>
-            <ItemListContainer greetings="Greetings from ItemListContainer" />
+          <Card style={{ margin: '1em 1em', minHeight: '100px' }}>
+            <ItemListContainer />
           </Card>
         </Content>
         <Footer style={{ textAlign: 'center' }}>

@@ -1,15 +1,23 @@
-import { Row, Col } from 'antd';
+import { useEffect , useState } from 'react';
+import { Spin } from 'antd';
+import { getProducts } from '../services/productService';
+import ItemList from './ItemList';
 
-import ItemCount from "./ItemCount";
+const ItemListContainer = () => {
+    const [products, setProducts] = useState([]);
+    const [loading, setLoading] = useState(true);
 
+    useEffect(() => {
+        getProducts.then(products_values => {
+            setProducts(products_values);
+            setLoading(false);
+        });
+    }, []);
 
-const ItemListContainer = ({ greetings }) => {
     return (
-        <Row gutter={16}>
-            <Col span={6}>
-                <ItemCount initialStock={5} initialCount={1}/>
-            </Col>
-        </Row>
+            <Spin spinning={loading} size="middle" tip="loading...">
+                <ItemList items={products} />
+            </Spin>
     );
 };
 
