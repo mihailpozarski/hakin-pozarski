@@ -26,8 +26,14 @@ const products = [
     }
 ];
 
-export const getProducts = new Promise((resolve, reject) => {
+export const getProducts = new Promise((resolve, _reject) => {
     setTimeout(() => {
         resolve(products);
     }, 2000);
+});
+
+export const getProduct = new Promise((resolve, _reject) => {
+    setTimeout(() => {
+        resolve(products[0]);
+    }, 4000);
 });

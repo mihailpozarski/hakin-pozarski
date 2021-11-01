@@ -1,23 +1,9 @@
-import { Card, Button } from 'antd';
+import ItemDetailContainer from './ItemDetailContainer';
 
 const Item = ({ item }) => {
     return (
-        <Card
-            title={item.title}
-            cover={
-                <img
-                    alt={item.title}
-                    src={item.pictureUrl}
-                />
-            }
-            actions={[<Button type="primary">Details</Button>]}
-        >
-            <Card.Meta
-                title={item.title}
-                description={`price: ${item.price}`}
-            />
-        </Card>
-    )
+        <ItemDetailContainer></ItemDetailContainer>
+    );
 };
 
 export default Item;
