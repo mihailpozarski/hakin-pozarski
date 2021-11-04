@@ -1,23 +1,26 @@
-import { Card, Button } from 'antd';
+import { Typography, Row, Image, Col } from 'antd';
+const { Title } = Typography;
 
 const ItemDetail = ({ item }) => {
-    return (
-        <Card
-            title={item.title}
-            cover={
-                <img
-                    alt={item.title}
-                    src={item.pictureUrl}
-                />
-            }
-            actions={[<Button type="primary">Details</Button>]}
-        >
-            <Card.Meta
-                title={item.title}
-                description={`price: ${item.price}`}
-            />
-        </Card>
-    );
+    if (!item) {
+        return <div>No Item...</div>;
+    }
+    else {
+        return (
+            <Row>
+                <Title>{item.title}</Title>
+                <Row justify="center" gutter={[24]}>
+                    <Col span={12}>
+                    <Image src={item.pictureUrl} alt={item.title} />
+                    </Col>
+                    <Col span={12}>
+                    <Title level={4}>${item.price}</Title>
+                    <p>{item.description}</p>
+                    </Col>
+                </Row>
+            </Row>
+        );
+    }
 };
 
 export default ItemDetail;
