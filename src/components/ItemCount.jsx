@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import { Card, Button } from 'antd';
+import { Button, Space } from 'antd';
 import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
 
-const ItemCount = ({ initialStock = 0, initialCount = 1 }) => {
+const ItemCount = ({ initialStock = 0, initialCount = 1, onAdd }) => {
     const [count, setCount] = useState(initialCount);
     const [stock, setStock] = useState(initialStock);
 
@@ -15,25 +15,18 @@ const ItemCount = ({ initialStock = 0, initialCount = 1 }) => {
     }
 
     return (
-        <Card
-            title="Item Count"
-            cover={
-                <img
-                    alt="example"
-                    src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
-                />
-            }
-            actions={[
-                <Button type="link" onClick={handleIncrement}><PlusOutlined /></Button>,
-                <span>{count}</span>,
-                <Button type="link" onClick={handleDecrement}><MinusOutlined /></Button>
-            ]}
-        >
-            <Card.Meta
-                title="Card title"
-                description="This is the description"
-            />
-        </Card>
+        <Space size='middle'>
+            <Button type="primary" onClick={handleDecrement}>
+                <MinusOutlined />
+            </Button>
+            <span>{count}</span>
+            <Button type="primary" onClick={handleIncrement}>
+                <PlusOutlined />
+            </Button>
+            <Button key='cart' type="primary" onClick={() => onAdd(count)}>
+                Add to cart
+            </Button>
+        </Space>
     );
 }
 
