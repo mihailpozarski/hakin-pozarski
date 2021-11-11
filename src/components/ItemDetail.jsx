@@ -1,15 +1,30 @@
-import { Typography, Row, Image, Col, Button } from 'antd';
+import { useState, useContext } from 'react';
 import { Link } from "react-router-dom";
-import { useState } from 'react';
+import { Typography, Row, Image, Col, Button } from 'antd';
+import { CartContext } from "../context/CartContext";
 import ItemCount from './ItemCount';
 const { Title } = Typography;
 
 const ItemDetail = ({ item }) => {
     const [count, setCount] = useState(0);
 
+    const { cartList, addToCart, isInCart } = useContext(CartContext);
+
     const onAdd = (value) => {
-        setCount(value);
-    }
+        if (isInCart(item.id)) {
+            alert("Item already in cart");
+        } else {
+            setCount(value);
+            addToCart({
+                id: item.id,
+                name: item.title,
+                price: item.price,
+                quantity: count
+            });
+        }
+    };
+
+    console.log(cartList);
 
     if (!item) {
         return <div>No Item...</div>;
