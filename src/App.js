@@ -5,6 +5,7 @@ import NavBar from './components/NavBar';
 import ItemListContainer from './components/ItemListContainer';
 import ItemDetailContainer from './components/ItemDetailContainer';
 import { CartContextProvider } from './context/CartContext';
+import { Cart } from './components/Cart';
 
 const { Header, Footer, Content } = Layout;
 
@@ -22,6 +23,7 @@ function App() {
                 <Route exact path="/" component={ItemListContainer} />
                 <Route path="/category/:id" component={ItemListContainer} />
                 <Route path="/item/:id" component={ItemDetailContainer} />
+                <Route path="/cart" component={Cart} />
               </Switch>
             </Card>
           </Content>

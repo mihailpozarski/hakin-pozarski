@@ -8,23 +8,22 @@ const { Title } = Typography;
 const ItemDetail = ({ item }) => {
     const [count, setCount] = useState(0);
 
-    const { cartList, addToCart, isInCart } = useContext(CartContext);
+    const { addToCart, isInCart, addQuantityToItem } = useContext(CartContext);
 
     const onAdd = (value) => {
+        setCount(value);
+        
         if (isInCart(item.id)) {
-            alert("Item already in cart");
+            addQuantityToItem(item.id, value);
         } else {
-            setCount(value);
             addToCart({
                 id: item.id,
                 name: item.title,
                 price: item.price,
-                quantity: count
+                quantity: value
             });
         }
     };
-
-    console.log(cartList);
 
     if (!item) {
         return <div>No Item...</div>;
