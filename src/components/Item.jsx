@@ -8,7 +8,9 @@ const Item = ({ item }) => {
             cover={
                 <img
                     alt={item.title}
-                    src={item.pictureUrl}
+                    src={item.image}
+                    width="200em"
+                    height="300em"
                 />
             }
             actions={[

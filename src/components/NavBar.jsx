@@ -21,10 +21,10 @@ const NavBar = () => {
           <SubMenu key="SubMenu" title="Productos">
             <Menu.ItemGroup title="Ejecicios">
                 <Menu.Item key="bandas">
-                  <Link to="/category/1">Bandas Elasticas</Link>
+                  <Link to="/category/1">Gorros 1</Link>
                 </Menu.Item>
                 <Menu.Item key="bosu">
-                  <Link to="/category/2">Bosu</Link>
+                  <Link to="/category/2">Gorros 2</Link>
                 </Menu.Item>
             </Menu.ItemGroup>
           </SubMenu>

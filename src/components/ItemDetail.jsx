@@ -34,7 +34,7 @@ const ItemDetail = ({ item }) => {
                 <Title>{item.title}</Title>
                 <Row justify="center" gutter={[24]}>
                     <Col span={12}>
-                    <Image src={item.pictureUrl} alt={item.title} />
+                    <Image src={item.image} alt={item.title} />
                     </Col>
                     <Col span={12}>
                     <Title level={4}>${item.price}</Title>

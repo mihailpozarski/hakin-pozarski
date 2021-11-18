@@ -1,8 +1,8 @@
 import { useEffect , useState } from 'react';
 import { useParams } from 'react-router';
 import { Spin } from 'antd';
-import { getProducts, getProductsByCategory } from '../services/productService';
 import ItemList from './ItemList';
+import { getFirestore } from '../services/getFirestore';
 
 const ItemListContainer = () => {
     const { id } = useParams();
@@ -12,17 +12,15 @@ const ItemListContainer = () => {
 
     useEffect(() => {
         setLoading(true);
-        if (id) {
-            getProductsByCategory(id).then(products_values => {
-            setProducts(products_values);
+
+        const db = getFirestore();
+        const dbQuery = id ? db.collection('items').where('categoryId', '==', parseInt(id)) : db.collection('items');
+
+        dbQuery.get().then(snapshot => {
+            const products = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+            setProducts(products);
             setLoading(false);
         });
-        } else {
-            getProducts().then(products_values => {
-                setProducts(products_values);
-                setLoading(false);
-            });
-        }
     }, [id]);
 
     return (
