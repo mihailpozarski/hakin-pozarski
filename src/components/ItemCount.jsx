@@ -19,7 +19,7 @@ const ItemCount = ({ initialStock = 0, initialCount = 1, onAdd }) => {
             <Button type="primary" onClick={handleDecrement}>
                 <MinusOutlined />
             </Button>
-            <span>{count}</span>
+            <span>{count} / {initialStock}</span>
             <Button type="primary" onClick={handleIncrement}>
                 <PlusOutlined />
             </Button>

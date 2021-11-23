@@ -42,7 +42,7 @@ const ItemDetail = ({ item }) => {
                     { count > 0 ?
                      <Button type='primary'><Link to="/cart">Terminar Compra</Link></Button> 
                      : 
-                     <ItemCount item={item} initialStock={5} onAdd={onAdd}  />
+                     <ItemCount item={item} initialStock={item.stock} onAdd={onAdd}  />
                     }
                     </Col>
                 </Row>

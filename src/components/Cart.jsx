@@ -2,13 +2,58 @@ import { Link } from 'react-router-dom'
 import { Card, Button, Space, Statistic, Row } from 'antd';
 import { useContext } from 'react';
 import { CartContext } from '../context/CartContext';
+import { getFirestore } from '../services/getFirestore';
+import firebase from 'firebase';
 
 export const Cart = () => {
     const { cartList, removeFromCart, clearCart } = useContext(CartContext);
 
+    
+
     const handleRemove = (item) => {
         removeFromCart(item.id);
     }
+
+    const generateOrder = () => {
+        const order = {
+            date: firebase.firestore.Timestamp.fromDate(new Date()),
+            buyer: { email: 'one@email.com', name: 'John Doe', phone: '123456789' },
+            items: cartList.map(item => ({
+                id: item.id,
+                name: item.name,
+                price: item.price,
+                quantity: item.quantity
+            })),
+            total: cartTotal(),
+        }  
+
+        const dbQuery = getFirestore();
+        dbQuery.collection('orders').add(order).then((order) => {
+            reduceStock(cartList);
+            alert(`Compra realizada con exito, su numero de orden es: ${order.id}`);
+        }).catch(err => {
+            console.log('Error creating order: ', err);
+        });
+    }
+
+    const reduceStock = (cartList) => {
+        const itemsToUpdate = getFirestore()
+                              .collection('items')
+                              .where(firebase.firestore.FieldPath.documentId(), 'in', cartList.map(item => item.id))
+        const batch = getFirestore().batch();
+
+        itemsToUpdate.get().then( collection => {
+            collection.docs.forEach( doc => {
+                const item = doc.data();
+                batch.update(doc.ref, { stock: item.stock - cartList.find(item => item.id === doc.id).quantity });
+            });
+            batch.commit().then(() => {
+                clearCart();
+            });
+        }); 
+    }
+
+    const cartTotal = () => cartList.reduce((total, item) => total + item.price * item.quantity, 0);
 
     if(cartList.length === 0) {
         return (
@@ -50,7 +95,8 @@ export const Cart = () => {
                 </Space>
                 <Row className="cart-total" justify="space-between" align="middle">
                     <Button type="danger" onClick={() => { clearCart() }}>Clear cart</Button>
-                    <Statistic title="Total" value={'$ ' + cartList.reduce((total, item) => total + item.price * item.quantity, 0)} />
+                    <Button type="primary" onClick={() => { generateOrder() }}>Checkout</Button>
+                    <Statistic title="Total" value={'$ ' + cartTotal() } />
                 </Row>
             </div>
         )
