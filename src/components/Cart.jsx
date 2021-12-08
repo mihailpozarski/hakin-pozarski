@@ -4,11 +4,14 @@ import { useContext } from 'react';
 import { CartContext } from '../context/CartContext';
 import { getFirestore } from '../services/getFirestore';
 import firebase from 'firebase';
+import CartForm from './CartForm';
 
 export const Cart = () => {
     const { cartList, removeFromCart, clearCart } = useContext(CartContext);
 
-    
+    const handleSubmit = (values) => {
+        generateOrder()
+    }
 
     const handleRemove = (item) => {
         removeFromCart(item.id);
@@ -25,7 +28,7 @@ export const Cart = () => {
                 quantity: item.quantity
             })),
             total: cartTotal(),
-        }  
+        }
 
         const dbQuery = getFirestore();
         dbQuery.collection('orders').add(order).then((order) => {
@@ -50,7 +53,7 @@ export const Cart = () => {
             batch.commit().then(() => {
                 clearCart();
             });
-        }); 
+        });
     }
 
     const cartTotal = () => cartList.reduce((total, item) => total + item.price * item.quantity, 0);
@@ -62,7 +65,7 @@ export const Cart = () => {
                 <Link to="/"><Button>Back to shop</Button></Link>
             </div>
         )
-    } else {        
+    } else {
         return (
             <div className="cart">
                 <h1>Cart</h1>
@@ -95,9 +98,9 @@ export const Cart = () => {
                 </Space>
                 <Row className="cart-total" justify="space-between" align="middle">
                     <Button type="danger" onClick={() => { clearCart() }}>Clear cart</Button>
-                    <Button type="primary" onClick={() => { generateOrder() }}>Checkout</Button>
                     <Statistic title="Total" value={'$ ' + cartTotal() } />
                 </Row>
+                <CartForm onSubmit={handleSubmit} />
             </div>
         )
     }
